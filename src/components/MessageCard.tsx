@@ -21,11 +21,12 @@ import {
 import { ApiResponse } from "@/types/ApiResponse";
 import axios from "axios";
 import { toast } from "sonner";
+// import { Message } from "@/model/User";
 
 type Message = {
   _id: string;
   content: string;
-  createdAt?: string; // optional, for display
+  createdAt?: Date;
 };
 
 type MessageCardProps = {
@@ -35,8 +36,15 @@ type MessageCardProps = {
 
 const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
   const handleDeleteConfirm = async () => {
-    const response = await axios.delete<ApiResponse>(`/api/deleteMessage/${message._id}`);
-    toast(response.data.message);
+    const response = await fetch(`/api/deleteMessage/${message._id}`, {
+      method: "DELETE",
+    });
+    // await axios.delete<ApiResponse>(
+    //   `/api/deleteMessage/${message._id}`
+    // );
+    const result = await response.json();
+    toast(JSON.stringify(result));
+    console.log(result);
     onMessageDelete(message._id);
   };
 
@@ -74,7 +82,9 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={handleDeleteConfirm}>Delete</AlertDialogAction>
+                <AlertDialogAction onClick={handleDeleteConfirm}>
+                  Delete
+                </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
