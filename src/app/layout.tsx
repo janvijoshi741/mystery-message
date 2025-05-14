@@ -1,10 +1,11 @@
+// src/app/layout.tsx
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import AuthProvider from "@/context/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
-import { Analytics } from "@vercel/analytics/next";
-// import Navbar from "@/components/Navbar";
+import { Analytics } from "@vercel/analytics/react";
+import AuthProvider from "@/context/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,16 +24,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Delay rendering until mounted inside AuthProvider */}
         <AuthProvider>
-          {/* <Navbar /> */}
           {children}
           <Toaster />
         </AuthProvider>

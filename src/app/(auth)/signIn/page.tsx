@@ -51,7 +51,7 @@ const SignIn = () => {
     }
 
     if (result?.url) {
-      router.replace("/Dashboard");
+      router.replace("/dashboard");
     }
   };
 
