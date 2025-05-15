@@ -23,7 +23,6 @@ export const authOptions: NextAuthOptions = {
               { username: credentials.identifier },
             ],
           });
-          console.log("Checking username/email", user);
 
           if (!user) {
             throw new Error("No user found with this email");
